@@ -1,55 +1,11 @@
 // src/pages/UsersPage.tsx
 import React, { useState } from 'react';
-import { Table, Input, Button, Space, Pagination, Form, Modal } from 'antd';
+import { Table, Input, Button, Space, Pagination, Form, Modal, Tag } from 'antd';
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
+import { User, userData } from '../data'; // 데이터 파일을 import 합니다.
 import type { ColumnsType } from 'antd/es/table';
-
-interface User {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
-
 const UsersPage: React.FC = () => {
-  const [data, setData] = useState<User[]>([
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-    },
-    {
-      key: '4',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-    },
-    {
-      key: '5',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    },
-    {
-      key: '6',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-    },
-  ]);
+  const [data, setData] = useState<User[]>(userData);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -114,6 +70,28 @@ const UsersPage: React.FC = () => {
       dataIndex: 'address',
       key: 'address',
     },
+    {
+      title: 'Tags',
+      key: 'tags',
+      dataIndex: 'tags',
+      render: (tags: string[]) => (
+        <>
+          {tags.map(tag => {
+            let color = tag.length > 5 ? 'geekblue' : 'green';
+            if (tag === 'loser') {
+              color = 'volcano';
+            }
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+
+
   ];
 
   return (
@@ -142,7 +120,7 @@ const UsersPage: React.FC = () => {
         onChange={handleTableChange}
         style={{ marginTop: 16, textAlign: 'center' }}
       /> */}
-      <Modal title="Add User" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title="Add User" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Form layout="vertical">
           <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please input the name!' }]}>
             <Input />
