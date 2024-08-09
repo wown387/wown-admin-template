@@ -8,6 +8,7 @@ import DashboardPage from './pages/DashboardPage';
 import AdminLayout from './layouts/AdminLayout';
 import UsersPage from './pages/UserPage';
 import SettingsPage from './pages/SettingsPage';
+import ProductPage from './pages/ProductPage';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
             <Route element={<AdminLayout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/users" element={<UsersPage />} />
+              <Route path="/product" element={<ProductPage />} />
               <Route path="/settings" element={<SettingsPage />} />
             </Route>
           </Route>
